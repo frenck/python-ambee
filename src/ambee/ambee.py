@@ -11,7 +11,12 @@ import aiohttp
 import async_timeout
 from yarl import URL
 
-from .exceptions import AmbeeConnectionError, AmbeeConnectionTimeoutError, AmbeeError
+from .exceptions import (
+    AmbeeAuthenticationError,
+    AmbeeConnectionError,
+    AmbeeConnectionTimeoutError,
+    AmbeeError,
+)
 from .models import AirQuality
 
 
@@ -46,6 +51,7 @@ class Ambee:
         Raises:
             AmbeeConnectionError: An error occurred while communitcation with
                 the Ambee API.
+            AmbeeAuthenticationError: The API key provided is not valid.
             AmbeeConnectionTimeoutError: A timeout occurred while communicating
                 with the Ambee API.
             AmbeeError: Received an unexpected response from the Ambee API.
@@ -81,8 +87,11 @@ class Ambee:
                 "Error occurred while communicating with the Ambee API"
             ) from exception
 
+        if response.status in {401, 403}:
+            raise AmbeeAuthenticationError("The provided Ambee API key is not an valid")
+
         content_type = response.headers.get("Content-Type", "")
-        if (response.status // 100) in [4, 5]:
+        if (response.status // 100) in {4, 5}:
             contents = await response.read()
             response.close()
 
