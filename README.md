@@ -19,7 +19,7 @@ Asynchronous Python client for the Ambee API.
 
 ## About
 
-This is a simple asynchoronous Python client library for the Ambee API.
+This is a simple asynchronous Python client library for the Ambee API.
 
 Ambee fuses the power of thousands of on-ground sensor data and hundreds of
 remote imagery from satellites. Their state-of-the-art AI and ML techniques with
