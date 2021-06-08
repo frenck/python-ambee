@@ -6,7 +6,7 @@ import aiohttp
 import pytest
 
 from ambee import Ambee
-from ambee.exceptions import AmbeeConnectionError, AmbeeError
+from ambee.exceptions import AmbeeAuthenticationError, AmbeeConnectionError, AmbeeError
 
 
 @pytest.mark.asyncio
@@ -97,6 +97,22 @@ async def test_client_error():
         with patch.object(
             session, "request", side_effect=aiohttp.ClientError
         ), pytest.raises(AmbeeConnectionError):
+            assert await client.request()
+
+
+@pytest.mark.asyncio
+async def test_http_error401(aresponses):
+    """Test HTTP 401 response handling."""
+    aresponses.add(
+        "api.ambeedata.com",
+        "/latest/by-lat-lng",
+        "GET",
+        aresponses.Response(text="OMG PUPPIES!", status=401),
+    )
+
+    async with aiohttp.ClientSession() as session:
+        client = Ambee(api_key="example", latitude=12, longitude=77, session=session)
+        with pytest.raises(AmbeeAuthenticationError):
             assert await client.request()
 
 

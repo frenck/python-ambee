@@ -9,5 +9,9 @@ class AmbeeConnectionError(AmbeeError):
     """Ambee connection exception."""
 
 
+class AmbeeAuthenticationError(AmbeeConnectionError):
+    """Ambee authentication exception."""
+
+
 class AmbeeConnectionTimeoutError(AmbeeConnectionError):
     """Ambee connection Timeout exception."""
