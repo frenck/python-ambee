@@ -87,11 +87,11 @@ class Ambee:
                 "Error occurred while communicating with the Ambee API"
             ) from exception
 
-        if response.status == 401:
+        if response.status in {401, 403}:
             raise AmbeeAuthenticationError("The provided Ambee API key is not an valid")
 
         content_type = response.headers.get("Content-Type", "")
-        if (response.status // 100) in [4, 5]:
+        if (response.status // 100) in {4, 5}:
             contents = await response.read()
             response.close()
 

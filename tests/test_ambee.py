@@ -101,13 +101,14 @@ async def test_client_error():
 
 
 @pytest.mark.asyncio
-async def test_http_error401(aresponses):
+@pytest.mark.parametrize("status", [401, 403])
+async def test_http_error401(aresponses, status):
     """Test HTTP 401 response handling."""
     aresponses.add(
         "api.ambeedata.com",
         "/latest/by-lat-lng",
         "GET",
-        aresponses.Response(text="OMG PUPPIES!", status=401),
+        aresponses.Response(text="OMG PUPPIES!", status=status),
     )
 
     async with aiohttp.ClientSession() as session:
