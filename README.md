@@ -22,7 +22,7 @@ Asynchronous Python client for the Ambee API.
 This is a simple asynchoronous Python client library for the Ambee API.
 
 Ambee fuses the power of thousands of on-ground sensor data and hundreds of
-remote imagery from satellites. Our state-of-the-art AI and ML techniques with
+remote imagery from satellites. Their state-of-the-art AI and ML techniques with
 proprietary models analyze environmental factors such as air quality, soil,
 micro weather, pollen, and more to help millions worldwide say safe and protect
 themselves.
@@ -124,7 +124,7 @@ check [the contributor's page][contributors].
 
 MIT License
 
-Copyright (c) 2019-2021 Franck Nijhof
+Copyright (c) 2021 Franck Nijhof
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
