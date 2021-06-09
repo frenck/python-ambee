@@ -104,3 +104,47 @@ class Pollen:
             weed_risk=risk.get("weed_pollen"),
             weed=count.get("weed_pollen"),
         )
+
+
+@dataclass
+class Weather:
+    """Object representing an Weather response from Ambee."""
+
+    apparent_temperature: float | None
+    cloud_cover: float | None
+    dew_point: float | None
+    humidity: float | None
+    ozone: float | None
+    pressure: float | None
+    temperature: float | None
+    time: int | None
+    visibility: int | None
+    wind_bearing: int | None
+    wind_gust: float | None
+    wind_speed: float | None
+
+    @staticmethod
+    def from_dict(data: dict[str, Any]) -> Weather:
+        """Return Weather object from the Ambee API response.
+
+        Args:
+            data: The data from the Ambee API.
+
+        Returns:
+            A Weather object.
+        """
+        data = data["data"]
+        return Weather(
+            apparent_temperature=data.get("apparentTemperature"),
+            cloud_cover=data.get("cloudCover"),
+            dew_point=data.get("dewPoint"),
+            humidity=data.get("humidity"),
+            ozone=data.get("ozone"),
+            pressure=data.get("pressure"),
+            temperature=data.get("temperature"),
+            time=data.get("time"),
+            visibility=data.get("visibility"),
+            wind_bearing=data.get("windBearing"),
+            wind_gust=data.get("windGust"),
+            wind_speed=data.get("windSpeed"),
+        )

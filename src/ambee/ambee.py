@@ -17,7 +17,7 @@ from .exceptions import (
     AmbeeConnectionTimeoutError,
     AmbeeError,
 )
-from .models import AirQuality, Pollen
+from .models import AirQuality, Pollen, Weather
 
 
 @dataclass
@@ -143,6 +143,19 @@ class Ambee:
         """
         data = await self.request("latest/pollen")
         return Pollen.from_dict(data)
+
+    async def weather(self) -> Weather:
+        """Get the latest, real-time weather conditions.
+
+        Ambee Weather API gives access to real-time local weather updates for
+        temperature, pressure, humidity, wind, cloud coverage, visibility, and
+        dew point of any location in the world.
+
+        Returns:
+            A Weather data object for the configured coordinates.
+        """
+        data = await self.request("weather/latest")
+        return Weather.from_dict(data)
 
     async def close(self) -> None:
         """Close open client session."""
