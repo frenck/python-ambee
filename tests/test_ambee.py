@@ -14,7 +14,7 @@ async def test_json_request(aresponses):
     """Test JSON response is handled correctly."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(
             status=200,
@@ -34,7 +34,7 @@ async def test_text_request(aresponses):
     """Test non JSON response is handled correctly."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(status=200, text="OK"),
     )
@@ -49,7 +49,7 @@ async def test_internal_session(aresponses):
     """Test JSON response is handled correctly."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(
             status=200,
@@ -106,7 +106,7 @@ async def test_http_error401(aresponses, status):
     """Test HTTP 401 response handling."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(text="OMG PUPPIES!", status=status),
     )
@@ -122,7 +122,7 @@ async def test_http_error400(aresponses):
     """Test HTTP 404 response handling."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(text="OMG PUPPIES!", status=404),
     )
@@ -138,7 +138,7 @@ async def test_http_error500(aresponses):
     """Test HTTP 500 response handling."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(
             body=b'{"status":"nok"}',
@@ -158,7 +158,7 @@ async def test_no_success(aresponses):
     """Test a message without a success message throws."""
     aresponses.add(
         "api.ambeedata.com",
-        "/latest/by-lat-lng",
+        "/by-lat-lng",
         "GET",
         aresponses.Response(
             status=200,
