@@ -17,7 +17,7 @@ from .exceptions import (
     AmbeeConnectionTimeoutError,
     AmbeeError,
 )
-from .models import AirQuality
+from .models import AirQuality, Pollen
 
 
 @dataclass
@@ -57,8 +57,8 @@ class Ambee:
             AmbeeError: Received an unexpected response from the Ambee API.
         """
         url = URL.build(
-            scheme="https", host="api.ambeedata.com", port=443, path=f"/{uri}"
-        ).join(URL("/latest/by-lat-lng"))
+            scheme="https", host="api.ambeedata.com", port=443, path=f"/{uri}/"
+        ).join(URL("by-lat-lng"))
 
         if self.session is None:
             self.session = aiohttp.ClientSession()
@@ -127,8 +127,22 @@ class Ambee:
         Returns:
             A AirQuality data object for the configured coordinates.
         """
-        data = await self.request()
+        data = await self.request("latest")
         return AirQuality.from_dict(data)
+
+    async def pollen(self) -> Pollen:
+        """Get the latest, real-time pollen count.
+
+        Pollen is a fine powder produced by trees and plants. Pollen can
+        severely affect people, especially those with different ailments such
+        as asthma and respiratory issues. It can aggravate these existing
+        conditions or cause these issues in high risk groups.
+
+        Returns:
+            A Pollen data object for the configured coordinates.
+        """
+        data = await self.request("latest/pollen")
+        return Pollen.from_dict(data)
 
     async def close(self) -> None:
         """Close open client session."""

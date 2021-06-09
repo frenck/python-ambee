@@ -1,7 +1,7 @@
 """Asynchronous Python client for the Ambee API."""
 
 from .ambee import Ambee, AmbeeAuthenticationError, AmbeeConnectionError, AmbeeError
-from .models import AirQuality  # noqa
+from .models import AirQuality, Pollen  # noqa
 
 __all__ = [
     "AirQuality",
@@ -9,4 +9,5 @@ __all__ = [
     "AmbeeAuthenticationError",
     "AmbeeConnectionError",
     "AmbeeError",
+    "Pollen",
 ]
