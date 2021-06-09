@@ -37,3 +37,70 @@ class AirQuality:
             carbon_monoxide=station.get("CO"),
             air_quality_index=station.get("AQI"),
         )
+
+
+@dataclass
+class Pollen:
+    """Object representing an Pollen response from Ambee."""
+
+    grass_poaceae: int | None
+    grass_risk: str | None
+    grass: int | None
+    tree_alder: int | None
+    tree_birch: int | None
+    tree_cypress: int | None
+    tree_elm: int | None
+    tree_hazel: int | None
+    tree_oak: int | None
+    tree_pine: int | None
+    tree_plane: int | None
+    tree_poplar: int | None
+    tree_risk: str | None
+    tree: int | None
+    weed_chenopod: int | None
+    weed_mugwort: int | None
+    weed_nettle: int | None
+    weed_ragweed: int | None
+    weed_risk: str | None
+    weed: int | None
+
+    @staticmethod
+    def from_dict(data: dict[str, Any]) -> Pollen:
+        """Return Pollen object from the Ambee API response.
+
+        Args:
+            data: The data from the Ambee API.
+
+        Returns:
+            A Pollen object.
+        """
+        data = data["data"][0]
+        count = data.get("Count", {})
+        risk = data.get("Risk", {})
+        species = data.get("Species", {})
+        grass = species.get("Grass", {})
+        tree = species.get("Tree", {})
+        weed = species.get("Weed", {})
+
+        return Pollen(
+            grass_poaceae=grass.get("Grass / Poaceae"),
+            grass_risk=risk.get("grass_pollen"),
+            grass=count.get("grass_pollen"),
+            tree_alder=tree.get("Alder"),
+            tree_birch=tree.get("Birch"),
+            tree_cypress=tree.get("Cypress"),
+            tree_elm=tree.get("Elm"),
+            tree_hazel=tree.get("Hazel"),
+            tree_oak=tree.get("Oak"),
+            tree_pine=tree.get("Pine"),
+            tree_plane=tree.get("Plane"),
+            tree_poplar=tree.get("Poplar / Cottonwood"),
+            tree_risk=risk.get("tree_pollen"),
+            tree=count.get("tree_pollen"),
+            weed_chenopod=weed.get("Chenopod"),
+            weed_mugwort=weed.get("Mugwort"),
+            weed_nettle=weed.get("Nettle"),
+            weed_ragweed=weed.get("Ragweed"),
+            weed_risk=risk.get("weed_pollen"),
+            weed=count.get("weed_pollen"),
+        )
